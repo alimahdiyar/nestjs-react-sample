@@ -1,0 +1,28 @@
+{
+    "name": "nest-react-boilerplate-with-auth",
+    "version": "0.0.1",
+    "author": {
+        "name": "Meesie2109",
+        "email": "meesrootjes@icloud.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Meesie2109/Nest-React-Boilerplate-With-Auth#readme"
+    },
+    "bugs": {
+        "url": "https://github.com/Meesie2109/Nest-React-Boilerplate-With-Auth/issues"
+    },
+    "dependencies": {
+        "turbo": "^1.10.7"
+    },
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "start": "node apps/api/dist/main"
+    },
+    "workspaces": [
+        "apps/*"
+    ],
+    "homepage": "https://github.com/Meesie2109/Nest-React-Boilerplate-With-Auth"
+}
