@@ -5,7 +5,7 @@ const HomePage: React.FunctionComponent = () => {
 
     return (
         <>
-            <div className={$.hello}>helloworld</div>
+            <div className={$.hello}>98498498498449898449</div>
         </>
     );
 };

@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import {MiddlewareConsumer, Module} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { CoreModule } from './core/core.module';
+import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 
 @Module({
   imports: [
@@ -14,4 +15,5 @@ import { CoreModule } from './core/core.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+}

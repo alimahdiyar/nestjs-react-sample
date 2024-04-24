@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { compare } from 'bcrypt';
-import { User } from '@prisma/client';
+import { User } from 'client/src/types/user.type';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   // Function to sign up as a user
-  async signUp(email: string, name: string, password: string): Promise<User> {
+  async signUp(email: string, name: string, password: string): Promise<any> {
     const user = await this.userService.findOne(email);
 
     if (!user) {
