@@ -1,4 +1,9 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { AuthGuard } from 'src/core/guards/auth.guard';
@@ -22,9 +27,23 @@ export class OrderService {
     });
   }
 
-  async updateOrder(id: number, dto: UpdateOrderDto) {
+  async updateOrder(orderId: number, userId: number, dto: UpdateOrderDto) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    if (order.userId !== userId) {
+      throw new UnauthorizedException(
+        'You do not have permission to update this order',
+      );
+    }
+
     return this.prisma.order.update({
-      where: { id },
+      where: { id: orderId },
       data: {
         ...dto,
         items: {
