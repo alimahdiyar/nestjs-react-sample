@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto, UpdateOrderDto } from './dto';
+import { CreateOrderDto, PatchOrderDto } from './dto';
 import { AuthGuard } from 'src/core/guards/auth.guard';
 import { AuthUser } from 'src/core/decoraters/auth.decorator';
 
@@ -28,12 +28,12 @@ export class OrderController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  async updateOrder(
+  async patchOrder(
     @Param('id') orderId: number,
     @AuthUser('sub') userId: number,
-    @Body() updateOrderDto: UpdateOrderDto,
+    @Body() updateOrderDto: PatchOrderDto,
   ) {
-    return this.orderService.updateOrder(orderId, userId, updateOrderDto);
+    return this.orderService.patchOrder(orderId, userId, updateOrderDto);
   }
 
   @UseGuards(AuthGuard)

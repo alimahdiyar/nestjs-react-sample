@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateOrderDto, UpdateOrderDto } from './dto';
+import { CreateOrderDto, PatchOrderDto } from './dto';
 
 @Injectable()
 export class OrderService {
@@ -20,7 +20,7 @@ export class OrderService {
     });
   }
 
-  async updateOrder(orderId: number, userId: number, dto: UpdateOrderDto) {
+  async patchOrder(orderId: number, userId: number, dto: PatchOrderDto) {
     return this.prisma.$transaction(async (prisma) => {
       const order = await prisma.order.findUnique({
         where: { id: orderId },
