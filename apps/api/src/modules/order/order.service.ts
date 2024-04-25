@@ -48,7 +48,7 @@ export class OrderService {
         ...dto,
         items: {
           updateMany: dto.items.map((item) => ({
-            where: { productName: item.productName },
+            where: { productId: item.productId },
             data: item,
           })),
         },

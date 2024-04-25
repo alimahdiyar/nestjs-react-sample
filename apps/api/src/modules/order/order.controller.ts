@@ -1,9 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Req, UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto';
 import { AuthGuard } from 'src/core/guards/auth.guard';

@@ -1,21 +1,14 @@
-import {
-  IsString,
-  IsDate,
-  IsArray,
-  ValidateNested,
-  IsNumber,
-} from 'class-validator';
+import { IsArray, IsNumber, Validate, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ProductExistsConstraint } from 'src/modules/product/product-exists.validator';
 
 class ItemDto {
-  @IsString()
-  productName: string;
+  @IsNumber()
+  @Validate(ProductExistsConstraint)
+  productId: number;
 
   @IsNumber()
   quantity: number;
-
-  @IsNumber()
-  pricePerUnit: number;
 }
 
 export class CreateOrderDto {
