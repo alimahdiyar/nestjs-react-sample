@@ -6,6 +6,29 @@ import { CreateOrderDto, PatchOrderDto } from './dto';
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
+  async getUserOrders(userId: number, page = 1, pageSize = 10) {
+    const skip = (page - 1) * pageSize; // Calculate the offset using pageSize
+
+    const orders = await this.prisma.order.findMany({
+      where: { userId: userId },
+      include: { items: true }, // Including items to show details about what's ordered
+      skip: skip,
+      take: pageSize,
+    });
+
+    const total = await this.prisma.order.count({
+      where: { userId: userId },
+    });
+
+    return {
+      data: orders,
+      total: total,
+      page: page,
+      pageSize: pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
+  }
+
   async createOrder(dto: CreateOrderDto, userId: number) {
     return this.prisma.order.create({
       data: {

@@ -6,16 +6,28 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto, PatchOrderDto } from './dto';
 import { AuthGuard } from 'src/core/guards/auth.guard';
 import { AuthUser } from 'src/core/decoraters/auth.decorator';
+import { PaginationDto } from 'src/core/dto';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
+
+  @UseGuards(AuthGuard)
+  @Get()
+  getUserOrders(
+    @AuthUser('sub') userId: number,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    const { page, pageSize } = paginationDto;
+    return this.orderService.getUserOrders(userId, page, pageSize);
+  }
 
   @UseGuards(AuthGuard)
   @Post()
