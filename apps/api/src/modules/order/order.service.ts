@@ -8,10 +8,11 @@ export class OrderService {
   constructor(private prisma: PrismaService) {}
 
   @UseGuards(AuthGuard)
-  async createOrder(dto: CreateOrderDto) {
+  async createOrder(dto: CreateOrderDto, userId: number) {
     return this.prisma.order.create({
       data: {
         ...dto,
+        userId,
         items: {
           createMany: {
             data: dto.items,
@@ -27,9 +28,10 @@ export class OrderService {
       data: {
         ...dto,
         items: {
-          updateMany: {
-            data: dto.items,
-          },
+          updateMany: dto.items.map((item) => ({
+            where: { productName: item.productName },
+            data: item,
+          })),
         },
       },
     });

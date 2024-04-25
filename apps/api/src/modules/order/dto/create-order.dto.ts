@@ -19,15 +19,6 @@ class ItemDto {
 }
 
 export class CreateOrderDto {
-  @IsString()
-  customerName: string;
-
-  @IsString()
-  address: string;
-
-  @IsDate()
-  orderDate: Date;
-
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ItemDto)

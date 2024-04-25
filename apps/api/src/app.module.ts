@@ -1,11 +1,12 @@
-import {MiddlewareConsumer, Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { CoreModule } from './core/core.module';
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import { OrderModule } from 'src/modules/order/order.module';
 
 @Module({
   imports: [
+    OrderModule,
     CoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -15,5 +16,4 @@ import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
   controllers: [],
   providers: [],
 })
-export class AppModule {
-}
+export class AppModule {}

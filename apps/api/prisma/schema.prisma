@@ -20,9 +20,6 @@ model User {
 
 model Order {
   id          Int      @id @default(autoincrement())
-  customerName String
-  address     String
-  orderDate   DateTime
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
   items       Item[]
