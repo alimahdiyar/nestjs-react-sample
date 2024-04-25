@@ -1,18 +1,11 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
-import { AuthGuard } from 'src/core/guards/auth.guard';
 
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
-  @UseGuards(AuthGuard)
   async createOrder(dto: CreateOrderDto, userId: number) {
     return this.prisma.order.create({
       data: {
@@ -28,46 +21,78 @@ export class OrderService {
   }
 
   async updateOrder(orderId: number, userId: number, dto: UpdateOrderDto) {
+    return this.prisma.$transaction(async (prisma) => {
+      const order = await prisma.order.findUnique({
+        where: { id: orderId },
+        include: { items: true },
+      });
+
+      if (!order || order.userId !== userId) {
+        throw new NotFoundException('Order not found');
+      }
+
+      // Update items: check if each item needs to be updated or created
+      const itemUpdates = dto.items.map(async (itemDto) => {
+        const existingItem = order.items.find(
+          (item) => item.productId === itemDto.productId,
+        );
+
+        if (existingItem) {
+          // Update existing item
+          return prisma.item.update({
+            where: { id: existingItem.id },
+            data: { quantity: itemDto.quantity },
+          });
+        } else {
+          // Create new item
+          return prisma.item.create({
+            data: {
+              productId: itemDto.productId,
+              quantity: itemDto.quantity,
+              orderId: orderId,
+            },
+          });
+        }
+      });
+
+      // Execute all item updates
+      await Promise.all(itemUpdates);
+
+      // Optionally handle the removal of items not listed in the DTO if required
+      // ...
+
+      return prisma.order.findUnique({
+        where: { id: orderId },
+        include: { items: true },
+      });
+    });
+  }
+
+  async getOrderById(orderId: number, userId: number) {
     const order = await this.prisma.order.findUnique({
       where: { id: orderId },
+      include: { items: true },
     });
 
-    if (!order) {
+    if (!order || order.userId !== userId) {
       throw new NotFoundException('Order not found');
     }
 
-    if (order.userId !== userId) {
-      throw new UnauthorizedException(
-        'You do not have permission to update this order',
-      );
+    return order;
+  }
+
+  async deleteOrder(orderId: number, userId: number) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+      include: { items: true },
+    });
+
+    if (!order || order.userId !== userId) {
+      throw new NotFoundException('Order not found');
     }
 
-    return this.prisma.order.update({
-      where: { id: orderId },
-      data: {
-        ...dto,
-        items: {
-          updateMany: dto.items.map((item) => ({
-            where: { productId: item.productId },
-            data: item,
-          })),
-        },
-      },
-    });
-  }
-
-  async getOrderById(id: number) {
-    return this.prisma.order.findUnique({
-      where: { id },
-      include: {
-        items: true, // Include items in the results
-      },
-    });
-  }
-
-  async deleteOrder(id: number) {
     return this.prisma.order.delete({
-      where: { id },
+      where: { id: orderId },
     });
   }
 }
