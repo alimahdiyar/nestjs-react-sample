@@ -1,10 +1,12 @@
 import {
+  registerDecorator,
   ValidationArguments,
+  ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service'; // Adjust the import path as necessary
+import { PrismaService } from '../prisma/prisma.service';
 
 @ValidatorConstraint({ name: 'ProductExists', async: true })
 @Injectable() // This allows the class to be injected with other services like PrismaService
@@ -21,4 +23,16 @@ export class ProductExistsConstraint implements ValidatorConstraintInterface {
   defaultMessage(args: ValidationArguments) {
     return `Product with ID ${args.value} does not exist.`;
   }
+}
+
+export function ProductExists(validationOptions?: ValidationOptions) {
+  return function (object: NonNullable<unknown>, propertyName: string) {
+    registerDecorator({
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: ProductExistsConstraint,
+    });
+  };
 }

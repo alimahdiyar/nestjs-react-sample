@@ -1,10 +1,11 @@
-import { IsArray, IsNumber, Validate, ValidateNested } from 'class-validator';
+import { IsArray, IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ProductExistsConstraint } from 'src/modules/product/product-exists.validator';
+import { ProductExists } from 'src/modules/product/product-exists.validator';
+import { HasUniqueProducts } from 'src/modules/product/has-unique-products.validator';
 
 class ItemDto {
   @IsNumber()
-  @Validate(ProductExistsConstraint)
+  @ProductExists()
   productId: number;
 
   @IsNumber()
@@ -15,5 +16,6 @@ export class CreateOrderDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ItemDto)
+  @HasUniqueProducts()
   items: ItemDto[];
 }

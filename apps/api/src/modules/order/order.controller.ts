@@ -2,9 +2,10 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
+  Patch,
   Post,
-  Put,
   UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
@@ -26,7 +27,7 @@ export class OrderController {
   }
 
   @UseGuards(AuthGuard)
-  @Put(':id')
+  @Patch(':id')
   async updateOrder(
     @Param('id') orderId: number,
     @AuthUser('sub') userId: number,
@@ -36,7 +37,7 @@ export class OrderController {
   }
 
   @UseGuards(AuthGuard)
-  @Delete(':id')
+  @Get(':id')
   async getOrderById(
     @Param('id') orderId: number,
     @AuthUser('sub') userId: number,
