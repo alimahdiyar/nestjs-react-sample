@@ -1,19 +1,19 @@
 const api = import.meta.env.VITE_API_URL;
 
 export default async (): Promise<boolean> => {
-  const valid = fetch(`${api}/auth/validate/`, {
+  // await fetch(`${api}/auth/signout/`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+  return fetch(`${api}/auth/validate/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   }).then(async (res) => {
     const data = await res.json();
-
-    if (data.statusCode === 200) {
-      return true;
-    }
-    return false;
+    return data.statusCode === 200;
   });
-
-  return valid;
 };
