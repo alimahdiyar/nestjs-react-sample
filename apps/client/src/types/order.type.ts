@@ -4,5 +4,9 @@ export type OrderItem = {
 };
 
 export type Order = {
+  createdAt: string;
+  id: number;
+  address: string;
+  customerName: string;
   items: (OrderItem & { id: number })[];
 };
