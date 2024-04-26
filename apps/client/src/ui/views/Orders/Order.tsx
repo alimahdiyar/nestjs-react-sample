@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { apiUrl } from "../../../constants";
 import { Order as OrderType, OrderItem } from "../../../types/order.type";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useProductsContext } from "../../context/ProductsContext";
 import Button from "../../components/atoms/Button/Button";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import OrderDocument from "./OrderDocument";
 
 const Order: React.FunctionComponent = () => {
   document.title = "Order";
@@ -113,8 +115,13 @@ const Order: React.FunctionComponent = () => {
   const { products } = useProductsContext();
 
   return (
-    <section className="mx-auto h-[67.5rem] fixed top-0 bottom-0 left-0 right-0 p-16">
-      <section className="bg-background-secondary h-[60rem] rounded-lg shadow-custom text-center p-8">
+    <section className="overflow-auto mx-auto min-h-[67.5rem] fixed top-0 bottom-0 left-0 right-0 p-16">
+      <Link to="/">
+        <Button className="flex flex-wrap w-40 p-4 mb-4 justify-evenly">
+          Home
+        </Button>
+      </Link>
+      <section className="bg-background-secondary min-h-[60rem] rounded-lg shadow-custom text-center p-8">
         <h1 className="text-4xl pb-4">Order</h1>
         {order && products !== null ? (
           <>
@@ -169,6 +176,20 @@ const Order: React.FunctionComponent = () => {
             <Button className={"m-4 px-4 py-3"} onClick={handleOrderUpdate}>
               Update Order
             </Button>
+            <div className="h-[500px] mb-8">
+              <PDFViewer className="w-full h-full">
+                <OrderDocument order={order} products={products} />
+              </PDFViewer>
+            </div>
+            <PDFDownloadLink
+              document={<OrderDocument order={order} products={products} />}
+              fileName={`order-${order.id}.pdf`}
+              className={`p-4 rounded-md border-none text-lg font-medium transition-all duration-300 ease-in-out bg-button-primary text-color-secondary cursor-pointer hover:bg-button-hover hover:text-button-primary`}
+            >
+              {({ blob, url, loading, error }) =>
+                loading ? "Loading document..." : "Download PDF"
+              }
+            </PDFDownloadLink>
           </>
         ) : (
           <div>loading...</div>
