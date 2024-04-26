@@ -23,6 +23,7 @@ const LoginPage: React.FunctionComponent = () => {
         </h3>
         <form className="pl-12 pr-12" action="POST" onSubmit={handleLogin}>
           <InputField
+            data-testid="auth-email-input"
             id="email"
             type="text"
             name="email"
@@ -31,6 +32,7 @@ const LoginPage: React.FunctionComponent = () => {
             className="mt-4"
           />
           <InputField
+            data-testid="auth-password-input"
             id="password"
             type="password"
             name="password"
@@ -38,7 +40,11 @@ const LoginPage: React.FunctionComponent = () => {
             maxLength={50}
             className="mt-4"
           />
-          <Button type="submit" className="mt-8 h-12 w-full">
+          <Button
+            data-testid="login-button"
+            type="submit"
+            className="mt-8 h-12 w-full"
+          >
             Login
           </Button>
         </form>

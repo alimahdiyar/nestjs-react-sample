@@ -1,4 +1,6 @@
-type Props = {
+import { HTMLProps } from "react";
+
+interface Props extends HTMLProps<HTMLInputElement> {
   id: string;
   type: string;
   name: string;
@@ -6,27 +8,15 @@ type Props = {
   maxLength?: number;
   value?: string;
   className?: string;
-};
+}
 
-const InputField = ({
-  id,
-  type,
-  name,
-  placeholder,
-  maxLength,
-  value,
-  className,
-}: Props) => {
+const InputField = ({ className, ...props }: Props) => {
   return (
     <input
+      {...props}
       className={`w-full h-16 border rounded-lg px-4 py-2 border-border focus:outline-none focus:border-border-focus ${
         className ?? ""
       }`}
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      maxLength={maxLength}
-      value={value}
     />
   );
 };
