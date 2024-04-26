@@ -5,14 +5,19 @@ import RegisterPage from "./views/Auth/RegisterPage/RegisterPage";
 import validateToken from "../core/utils/validateToken";
 import Orders from "./views/Orders/Orders";
 import Order from "./views/Orders/Order";
-
-const auth = await validateToken();
+import { useEffect, useState } from "react";
 
 export default () => {
+  const [auth, setAuth] = useState<boolean | null>(null);
+  useEffect(() => {
+    validateToken()
+      .then((value) => setAuth(value))
+      .catch((e) => alert(String(e)));
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
-        {auth && (
+        {auth === true && (
           <>
             <Route path="/" element={<HomePage />} />
             <Route path="/orders" element={<Orders />} />
@@ -21,7 +26,7 @@ export default () => {
             <Route path="/register" element={<Navigate to={"/"} />} />
           </>
         )}
-        {!auth && (
+        {auth === false && (
           <>
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
