@@ -3,8 +3,9 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/modules/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
-import { AuthService } from '../src/core/auth/auth.service';
 import { setupApp } from '../src/main';
+import { AuthGuard } from '../src/core/guards/auth.guard';
+import { MockAuthGuard } from '../src/common/mock-auth.guard';
 
 describe('OrderController (e2e)', () => {
   let app: INestApplication;
@@ -14,7 +15,10 @@ describe('OrderController (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard) // or whatever guard you are using
+      .useClass(MockAuthGuard)
+      .compile();
 
     app = moduleFixture.createNestApplication() as INestApplication;
     await setupApp(app);
@@ -27,60 +31,22 @@ describe('OrderController (e2e)', () => {
         { name: 'Product 2', pricePerUnit: 15.5 },
       ],
     });
-
-    const authService = app.get(AuthService);
-    const email = 'aaa133q@ba.com';
-    const password = '12341234';
-    await authService.signUp(email, 'a', password);
-    token = await authService.signIn(email, password);
   });
 
   it('POST /orders - Create order', async () => {
-    console.log({ token });
     const orderData = {
       items: [{ productId: 1, quantity: 2 }],
     };
+    // jest.mock('../src/modules/prisma/prisma.service', () => ({
+    //   PrismaService: jest.fn().mockImplementation(() => ({
+    //     canActivate: jest.fn(() => true),
+    //   })),
+    // }));
     return request(app.getHttpServer())
       .post('/api/v1/orders')
-      .set('Cookie', `token=${token};`)
       .send(orderData)
       .expect(201);
   });
-
-  // it('GET /orders/:id - Get order', async () => {
-  //   const orderId = 1;
-  //   return request(app.getHttpServer())
-  //     .get(`/orders/${orderId}`)
-  //     .expect(200)
-  //     .expect({
-  //       id: orderId,
-  //       customerName: 'John Doe',
-  //       address: '1234 Test St',
-  //       items: [{ productId: 1, quantity: 2 }],
-  //     });
-  // });
-  //
-  // it('PUT /orders/:id - Update order', async () => {
-  //   const orderId = 1;
-  //   const updateData = {
-  //     customerName: 'Jane Doe',
-  //   };
-  //   return request(app.getHttpServer())
-  //     .put(`/orders/${orderId}`)
-  //     .send(updateData)
-  //     .expect(200)
-  //     .expect({
-  //       id: orderId,
-  //       ...updateData,
-  //     });
-  // });
-  //
-  // it('DELETE /orders/:id - Delete order', async () => {
-  //   const orderId = 1;
-  //   return request(app.getHttpServer())
-  //     .delete(`/orders/${orderId}`)
-  //     .expect(200);
-  // });
 
   afterEach(async () => {
     await app.close();
