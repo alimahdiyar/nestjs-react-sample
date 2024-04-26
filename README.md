@@ -24,12 +24,12 @@ _Installation process for the repository_
    ```sh
    npm install or npm i
    ```
-3. Create a dotnev file
+3. Create a dotnev file in the apps/api folder
    ```sh
-   POSTGRES_USER = DATABASE_USERNAME
-   POSTGRES_PASSWORD= DATABASE_PASSWORD
-   POSTGRES_DB= DATABASE_NAME
-   DATABASE_URL=. DOCKER_DATABASE_URL
+   POSTGRES_USER=DATABASE_USERNAME
+   POSTGRES_PASSWORD=DATABASE_PASSWORD
+   POSTGRES_DB=DATABASE_NAME
+   DATABASE_URL=DOCKER_DATABASE_URL
    ```
 4. Setting up docker
    ```sh
