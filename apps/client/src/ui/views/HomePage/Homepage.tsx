@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "../../components/atoms/Button/Button";
 import LogoutButton from "../../components/atoms/Button/LogoutButton";
 import { apiUrl } from "../../../constants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type OrderItem = {
   productId: number;
@@ -84,6 +84,11 @@ const HomePage: React.FunctionComponent = () => {
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
       <section className="md:w-3/4 w-full p-16 overflow-auto">
+        <Link to="/orders/">
+          <Button className="flex flex-wrap w-40 p-4 mb-4 justify-evenly">
+            View Orders
+          </Button>
+        </Link>
         <div
           className="bg-white h-auto rounded-lg shadow-lg text-center p-8 m-auto"
           style={{ maxWidth: "1200px" }}

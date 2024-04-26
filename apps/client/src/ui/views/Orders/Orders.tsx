@@ -29,6 +29,11 @@ const Orders: React.FunctionComponent = () => {
 
   return (
     <section className="mx-auto h-[67.5rem] fixed top-0 bottom-0 left-0 right-0 p-16">
+      <Link to="/">
+        <Button className="flex flex-wrap w-40 p-4 mb-4 justify-evenly">
+          Home
+        </Button>
+      </Link>
       <section className="bg-background-secondary h-[60rem] rounded-lg shadow-custom text-center p-8">
         <h1 className="text-4xl pb-4">Orders</h1>
         {orders ? (

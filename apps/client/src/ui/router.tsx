@@ -4,6 +4,7 @@ import LoginPage from "./views/Auth/LoginPage/LoginPage";
 import RegisterPage from "./views/Auth/RegisterPage/RegisterPage";
 import validateToken from "../core/utils/validateToken";
 import Orders from "./views/Orders/Orders";
+import Order from "./views/Orders/Order";
 
 const auth = await validateToken();
 
@@ -15,6 +16,7 @@ export default () => {
           <>
             <Route path="/" element={<HomePage />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/:id" element={<Order />} />
             <Route path="/login" element={<Navigate to={"/"} />} />
             <Route path="/register" element={<Navigate to={"/"} />} />
           </>
