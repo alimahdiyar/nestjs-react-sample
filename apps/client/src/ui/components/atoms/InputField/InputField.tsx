@@ -1,5 +1,3 @@
-import $ from "./InputField.module.scss";
-
 type Props = {
   id: string;
   type: string;
@@ -19,8 +17,7 @@ const InputField = ({
 }: Props) => {
   return (
     <input
-      id={$[id]}
-      className={$.input}
+      className="w-full h-16 border rounded-lg px-4 py-2 border-border focus:outline-none focus:border-border-focus"
       type={type}
       name={name}
       placeholder={placeholder}
