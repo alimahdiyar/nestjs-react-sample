@@ -26,7 +26,7 @@ const RegisterPage: React.FunctionComponent = () => {
             id="username"
             type="text"
             name="username"
-            placeholder="Username"
+            placeholder="Your Name"
             maxLength={50}
             className="mt-4"
           />
@@ -54,7 +54,7 @@ const RegisterPage: React.FunctionComponent = () => {
             maxLength={50}
             className="mt-4"
           />
-          <Button type="submit" className="mt-8">
+          <Button type="submit" className="mt-8 h-12">
             Register
           </Button>
         </form>

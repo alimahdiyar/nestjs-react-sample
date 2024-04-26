@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-        font-size: 11px;
-        background-color: theme('colors.background-primary');
-    }
+  html {
+    font-size: 12px;
+    background-color: theme('colors.background-primary');
+  }
 
-    body {
-        font-family: 'Montserrat', sans-serif;
-    }
+  body {
+    font-family: sans-serif;
+  }
 }

@@ -56,7 +56,7 @@ export default () => {
       } else {
         if (type === "signup") {
           setError(null);
-          window.location.href = "/login";
+          handleSubmit(e, "signin");
         } else {
           // Message when everything is ok
           setError(null);
