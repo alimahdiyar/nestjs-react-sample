@@ -6,6 +6,53 @@ import { useProductsContext } from "../../context/ProductsContext";
 import Button from "../../components/atoms/Button/Button";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import OrderDocument from "./OrderDocument";
+import { Product } from "../../../types/product.type";
+
+function OrderPDF({
+  order,
+  products,
+}: {
+  order: OrderType;
+  products: Product[];
+}) {
+  const [fontSize, setFontSize] = useState(15);
+  return (
+    <div>
+      <div className="h-[500px] mb-8">
+        <PDFViewer className="w-full h-full">
+          <OrderDocument
+            order={order}
+            products={products}
+            fontSize={fontSize}
+          />
+        </PDFViewer>
+      </div>
+      <label htmlFor="pdf-font-size">Font Size:</label>
+      <input
+        id="pdf-font-size"
+        type="number"
+        className="p-2 w-20 border-2 mx-4"
+        value={fontSize}
+        onChange={(e) => setFontSize(Number(e.target.value))}
+      />
+      <PDFDownloadLink
+        document={
+          <OrderDocument
+            order={order}
+            products={products}
+            fontSize={fontSize}
+          />
+        }
+        fileName={`order-${order.id}.pdf`}
+        className={`p-4 rounded-md border-none text-lg font-medium transition-all duration-300 ease-in-out bg-button-primary text-color-secondary cursor-pointer hover:bg-button-hover hover:text-button-primary`}
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? "Loading document..." : "Download PDF"
+        }
+      </PDFDownloadLink>
+    </div>
+  );
+}
 
 const Order: React.FunctionComponent = () => {
   document.title = "Order";
@@ -176,20 +223,7 @@ const Order: React.FunctionComponent = () => {
             <Button className={"m-4 px-4 py-3"} onClick={handleOrderUpdate}>
               Update Order
             </Button>
-            <div className="h-[500px] mb-8">
-              <PDFViewer className="w-full h-full">
-                <OrderDocument order={order} products={products} />
-              </PDFViewer>
-            </div>
-            <PDFDownloadLink
-              document={<OrderDocument order={order} products={products} />}
-              fileName={`order-${order.id}.pdf`}
-              className={`p-4 rounded-md border-none text-lg font-medium transition-all duration-300 ease-in-out bg-button-primary text-color-secondary cursor-pointer hover:bg-button-hover hover:text-button-primary`}
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? "Loading document..." : "Download PDF"
-              }
-            </PDFDownloadLink>
+            <OrderPDF order={order} products={products} />
           </>
         ) : (
           <div>loading...</div>
