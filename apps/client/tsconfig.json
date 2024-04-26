@@ -4,10 +4,14 @@
     "target": "es2018",
     "jsx": "react-jsx",
     "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "~src/*": ["src/*"],
-      "@components/*": ["./src/ui/components/*"]
+      "~src/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "./src/ui/components/*"
+      ]
     },
     "sourceMap": true,
     "moduleResolution": "node",
@@ -29,8 +33,14 @@
     "skipLibCheck": true,
     "removeComments": true,
     "isolatedModules": true,
-    "incremental": true,
+    "incremental": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
-  "exclude": ["./node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }

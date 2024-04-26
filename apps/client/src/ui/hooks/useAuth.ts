@@ -1,7 +1,5 @@
 import { useState } from "react";
-
-// Get api url from .env file
-const api = await import.meta.env.VITE_API_URL;
+import { apiUrl } from "../../constants";
 
 export default () => {
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +31,7 @@ export default () => {
     const url = type === "signup" ? "signup" : "signin";
 
     // Fetch to server
-    fetch(`${api}/auth/${url}`, {
+    fetch(`${apiUrl}/auth/${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { User } from "../../types/user.type";
-
-const api = import.meta.env.VITE_API_URL;
+import { apiUrl } from "../../constants";
 
 export default (url: string, type: string) => {
   const [data, setData] = useState<User[]>([]);
@@ -9,7 +8,7 @@ export default (url: string, type: string) => {
 
   useEffect(() => {
     (async () => {
-      await fetch(`${api}/${url}`, {
+      await fetch(`${apiUrl}/${url}`, {
         method: type,
         headers: {
           "Content-Type": "application/json",

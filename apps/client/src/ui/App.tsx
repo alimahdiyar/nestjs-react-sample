@@ -1,12 +1,15 @@
 import React from "react";
-import  Router from "./router";
+import Router from "./router";
+import { ProductsProvider } from "./context/ProductsContext";
 
 function App() {
   return (
     <React.Suspense>
-      <main>
-        <Router />
-      </main>
+      <ProductsProvider>
+        <main>
+          <Router />
+        </main>
+      </ProductsProvider>
     </React.Suspense>
   );
 }
