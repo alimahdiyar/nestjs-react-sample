@@ -41,6 +41,21 @@ _Installation process for the repository_
    ```
 6. The repo is now ready to use
 
+### e2e tests
+
+#### Frontend
+
+```sh
+npm run dev:host --workspace=client
+npm run cypress:open --workspace=client # while the server is running by the previous command
+```
+
+#### Backend
+
+```sh
+npm run test:e2e --workspace=api
+```
+
 ### Usage
 
 _Basic commands and code examples for this repository_
