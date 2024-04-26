@@ -19,7 +19,7 @@ export default () => {
         )}
         {!auth && (
           <>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Navigate to={"/login"} />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
           </>
