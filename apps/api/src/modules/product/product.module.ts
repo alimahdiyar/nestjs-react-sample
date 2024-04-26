@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ProductExistsConstraint } from 'src/modules/product/product-exists.validator';
-import { HasUniqueProductsConstraint } from 'src/modules/product/has-unique-products.validator';
+import { ProductExistsConstraint } from './product-exists.validator';
+import { HasUniqueProductsConstraint } from './has-unique-products.validator';
 
 @Module({
   providers: [ProductExistsConstraint, HasUniqueProductsConstraint],

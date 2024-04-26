@@ -11,9 +11,9 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto, PatchOrderDto } from './dto';
-import { AuthGuard } from 'src/core/guards/auth.guard';
-import { AuthUser } from 'src/core/decoraters/auth.decorator';
-import { PaginationDto } from 'src/core/dto';
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { AuthUser } from '../../core/decoraters/auth.decorator';
+import { PaginationDto } from '../../core/dto';
 
 @Controller('orders')
 export class OrderController {

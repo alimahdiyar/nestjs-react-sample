@@ -1,2 +1,2 @@
-export * from 'src/modules/order/dto/create-order.dto';
-export * from 'src/modules/order/dto/patch-order.dto';
+export * from './create-order.dto';
+export * from './patch-order.dto';

@@ -1,7 +1,7 @@
 import { IsArray, IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ProductExists } from 'src/modules/product/product-exists.validator';
-import { HasUniqueProducts } from 'src/modules/product/has-unique-products.validator';
+import { ProductExists } from '../../product/product-exists.validator';
+import { HasUniqueProducts } from '../../product/has-unique-products.validator';
 
 class ItemDto {
   @IsNumber()
