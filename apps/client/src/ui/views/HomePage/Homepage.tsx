@@ -4,6 +4,7 @@ import Button from "../../components/atoms/Button/Button";
 import LogoutButton from "../../components/atoms/Button/LogoutButton";
 import { apiUrl } from "../../../constants";
 import { Link, useNavigate } from "react-router-dom";
+import { ProductCard } from "../../components/molecules/ProductCard/ProductCard";
 
 type OrderItem = {
   productId: number;
@@ -98,34 +99,13 @@ const HomePage: React.FunctionComponent = () => {
           ) : (
             <div className="flex flex-wrap justify-center">
               {products.map((product) => (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="m-4 p-4 border rounded shadow-lg flex flex-col items-center w-48"
-                >
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="Product"
-                    className="mb-2"
-                  />
-                  <div className="font-semibold">{product.name}</div>
-                  <div className="flex items-center mt-2 rounded-lg">
-                    <Button
-                      className="px-4 py-2"
-                      onClick={() => handleAddProduct(product.id)}
-                    >
-                      +
-                    </Button>
-                    <div className="mx-4 text-lg font-semibold">
-                      {getProductQuantity(product.id)}
-                    </div>
-                    <Button
-                      className="px-4 py-2"
-                      onClick={() => handleRemoveProduct(product.id)}
-                    >
-                      -
-                    </Button>
-                  </div>
-                </div>
+                  product={product}
+                  handleAddProduct={handleAddProduct}
+                  getProductQuantity={getProductQuantity}
+                  handleRemoveProduct={handleRemoveProduct}
+                />
               ))}
             </div>
           )}
@@ -136,12 +116,16 @@ const HomePage: React.FunctionComponent = () => {
         <h2 className="text-lg font-bold mb-4">Current Order</h2>
         {orderItems.length ? (
           <ul>
-            {orderItems.map((item) => (
-              <li key={item.productId} className="mb-2">
-                {products?.find((p) => p.id === item.productId)?.name}:{" "}
-                {item.quantity}
-              </li>
-            ))}
+            {orderItems.map((item) => {
+              const product = products?.find((p) => p.id === item.productId);
+              if (!product) return <></>;
+              return (
+                <li key={item.productId} className="mb-2">
+                  {product.name}: {item.quantity} ($
+                  {(item.quantity * product.pricePerUnit).toFixed(2)})
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <div>Empty</div>

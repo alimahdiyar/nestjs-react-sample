@@ -7,6 +7,7 @@ import Button from "../../components/atoms/Button/Button";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import OrderDocument from "./OrderDocument";
 import { Product } from "../../../types/product.type";
+import { ProductCard } from "../../components/molecules/ProductCard/ProductCard";
 
 function OrderPDF({
   order,
@@ -136,8 +137,9 @@ const Order: React.FunctionComponent = () => {
         items: orderItems,
       }),
     })
-      .then(() => {
+      .then((response) => {
         alert("Order updated successfully!");
+        response.json().then((data) => setOrder(data));
       })
       .catch((e) => alert(String(e)));
   };
@@ -177,40 +179,34 @@ const Order: React.FunctionComponent = () => {
               <div>Date: {new Date(order.createdAt).toLocaleString()}</div>
               <div>Customer Name:{order.customerName}</div>
               <div>Shipping address: {order.address}</div>
+              <div>
+                Total: $
+                {order.items
+                  .reduce(
+                    (a, c) =>
+                      a +
+                      c.quantity *
+                        Number(
+                          products.find((p) => p.id === c.productId)
+                            ?.pricePerUnit
+                        ),
+                    0
+                  )
+                  .toFixed(2)}
+              </div>
             </div>
             <div className="flex flex-wrap justify-center">
               {orderItems.map((item) => {
                 const product = products.find((p) => p.id === item.productId);
                 if (!product) return <></>;
                 return (
-                  <div
+                  <ProductCard
                     key={item.productId}
-                    className="m-4 p-4 border rounded shadow-lg flex flex-col items-center w-48"
-                  >
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Product"
-                      className="mb-2"
-                    />
-                    <div className="font-semibold">{product.name}</div>
-                    <div className="flex items-center mt-2 rounded-lg">
-                      <Button
-                        className="px-4 py-2"
-                        onClick={() => handleAddProduct(product.id)}
-                      >
-                        +
-                      </Button>
-                      <div className="mx-4 text-lg font-semibold">
-                        {getProductQuantity(product.id)}
-                      </div>
-                      <Button
-                        className="px-4 py-2"
-                        onClick={() => handleRemoveProduct(product.id)}
-                      >
-                        -
-                      </Button>
-                    </div>
-                  </div>
+                    product={product}
+                    handleAddProduct={handleAddProduct}
+                    getProductQuantity={getProductQuantity}
+                    handleRemoveProduct={handleRemoveProduct}
+                  />
                 );
               })}
             </div>

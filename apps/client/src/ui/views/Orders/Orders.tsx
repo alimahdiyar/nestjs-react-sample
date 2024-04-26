@@ -3,6 +3,7 @@ import { apiUrl } from "../../../constants";
 import { Order } from "../../../types/order.type";
 import Button from "../../components/atoms/Button/Button";
 import { Link } from "react-router-dom";
+import { useProductsContext } from "../../context/ProductsContext";
 
 const Orders: React.FunctionComponent = () => {
   document.title = "Orders";
@@ -35,6 +36,7 @@ const Orders: React.FunctionComponent = () => {
   const handlePrevious = () => {
     setCurrentPage((current) => (current > 1 ? current - 1 : current));
   };
+  const { products } = useProductsContext();
 
   return (
     <section className="mx-auto h-[67.5rem] fixed top-0 bottom-0 left-0 right-0 p-16">
@@ -45,7 +47,7 @@ const Orders: React.FunctionComponent = () => {
       </Link>
       <section className="bg-background-secondary h-[60rem] rounded-lg shadow-custom text-center p-8">
         <h1 className="text-4xl pb-4">Orders</h1>
-        {orders ? (
+        {orders !== null && products !== null ? (
           <>
             {orders.map((order) => (
               <Link to={"/orders/" + order.id} key={order.id}>
@@ -54,6 +56,21 @@ const Orders: React.FunctionComponent = () => {
                   <div>Date: {new Date(order.createdAt).toLocaleString()}</div>
                   <div>Customer Name: {order.customerName}</div>
                   <div>Shipping address: {order.address}</div>
+                  <div>
+                    Total: $
+                    {order.items
+                      .reduce(
+                        (a, c) =>
+                          a +
+                          c.quantity *
+                            Number(
+                              products.find((p) => p.id === c.productId)
+                                ?.pricePerUnit
+                            ),
+                        0
+                      )
+                      .toFixed(2)}
+                  </div>
                 </Button>
               </Link>
             ))}
