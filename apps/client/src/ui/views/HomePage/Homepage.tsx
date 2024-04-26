@@ -1,13 +1,7 @@
-import $ from "./HomePage.module.scss";
-
 const HomePage: React.FunctionComponent = () => {
-    document.title = "Home";
+  document.title = "Home";
 
-    return (
-        <>
-            <div className={$.hello}>98498498498449898449</div>
-        </>
-    );
+  return <div>hi</div>;
 };
 
 export default HomePage;

@@ -15,13 +15,4 @@ export default defineConfig({
     },
   },
   base: PUBLIC_PATH,
-  css: {
-    preprocessorOptions: {
-      scss: {
-        // adds the helper file into every scss file so they all have
-        // access to the global variables and mixins.
-        additionalData: "@import './src/ui/styling/helpers.scss';",
-      },
-    },
-  },
 });
