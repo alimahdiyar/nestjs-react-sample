@@ -36,6 +36,8 @@ describe('OrderController (e2e)', () => {
   it('POST /orders - Create order', async () => {
     const orderData = {
       items: [{ productId: 1, quantity: 2 }],
+      customerName: 'a',
+      address: 'aaaaaa',
     };
     // jest.mock('../src/modules/prisma/prisma.service', () => ({
     //   PrismaService: jest.fn().mockImplementation(() => ({

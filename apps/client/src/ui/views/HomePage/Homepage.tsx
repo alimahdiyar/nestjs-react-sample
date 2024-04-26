@@ -12,11 +12,13 @@ type OrderItem = {
 
 const HomePage: React.FunctionComponent = () => {
   document.title = "Home";
-  const [order, setOrder] = useState<OrderItem[]>([]);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [customerName, setCustomerName] = useState("");
+  const [address, setAddress] = useState("");
   const { products } = useProductsContext();
 
   const handleAddProduct = (productId: number) => {
-    setOrder((currentOrder) => {
+    setOrderItems((currentOrder) => {
       const index = currentOrder.findIndex(
         (item) => item.productId === productId
       );
@@ -35,7 +37,7 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const handleRemoveProduct = (productId: number) => {
-    setOrder((currentOrder) => {
+    setOrderItems((currentOrder) => {
       const index = currentOrder.findIndex(
         (item) => item.productId === productId
       );
@@ -55,7 +57,7 @@ const HomePage: React.FunctionComponent = () => {
   };
 
   const getProductQuantity = (productId: number) => {
-    const item = order.find((item) => item.productId === productId);
+    const item = orderItems.find((item) => item.productId === productId);
     return item ? item.quantity : 0;
   };
 
@@ -66,7 +68,11 @@ const HomePage: React.FunctionComponent = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(order),
+      body: JSON.stringify({
+        customerName,
+        address,
+        items: orderItems,
+      }),
     })
       .then(() => {
         alert("Order submitted successfully!");
@@ -123,18 +129,36 @@ const HomePage: React.FunctionComponent = () => {
       </section>
       <section className="md:w-1/4 w-full min-h-64 bg-gray-100 p-4 overflow-auto">
         <h2 className="text-lg font-bold mb-4">Current Order</h2>
-        <ul>
-          {order.map((item) => (
-            <li key={item.productId} className="mb-2">
-              {products?.find((p) => p.id === item.productId)?.name}:{" "}
-              {item.quantity}
-            </li>
-          ))}
-        </ul>
+        {orderItems.length ? (
+          <ul>
+            {orderItems.map((item) => (
+              <li key={item.productId} className="mb-2">
+                {products?.find((p) => p.id === item.productId)?.name}:{" "}
+                {item.quantity}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div>Empty</div>
+        )}
+        <input
+          type="text"
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
+          placeholder="Customer Name"
+          className="mt-4 p-2 w-full"
+        />
+        <input
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Address"
+          className="mt-4 p-2 w-full"
+        />
         <Button
-          className="mt-4 py-2"
+          className={"mt-4 py-2 w-full"}
           onClick={handleOrderSubmit}
-          disabled={order.length === 0}
+          disabled={orderItems.length === 0 || !customerName || !address}
         >
           Submit Order
         </Button>

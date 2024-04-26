@@ -54,7 +54,7 @@ const RegisterPage: React.FunctionComponent = () => {
             maxLength={50}
             className="mt-4"
           />
-          <Button type="submit" className="mt-8 h-12">
+          <Button type="submit" className="mt-8 h-12 w-full">
             Register
           </Button>
         </form>

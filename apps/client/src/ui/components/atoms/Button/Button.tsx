@@ -16,9 +16,13 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`w-full rounded-md border-none bg-button-primary text-color-secondary text-lg font-medium cursor-pointer transition-all duration-300 ease-in-out hover:bg-button-hover hover:text-button-primary ${
-        disabled ? "bg-button-hover text-button-primary cursor-not-allowed" : ""
-      } ${className ?? ""}`}
+      className={`rounded-md border-none text-lg font-medium transition-all duration-300 ease-in-out ${
+        className ? className : ""
+      } ${
+        disabled
+          ? "bg-button-hover text-button-primary cursor-not-allowed"
+          : "bg-button-primary text-color-secondary cursor-pointer hover:bg-button-hover hover:text-button-primary"
+      }`}
       onClick={onClick}
       disabled={disabled}
     >
