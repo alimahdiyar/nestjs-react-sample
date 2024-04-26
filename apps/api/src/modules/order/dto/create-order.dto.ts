@@ -1,4 +1,10 @@
-import { IsArray, IsNumber, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProductExists } from '../../product/product-exists.validator';
 import { HasUniqueProducts } from '../../product/has-unique-products.validator';
@@ -18,4 +24,12 @@ export class CreateOrderDto {
   @Type(() => ItemDto)
   @HasUniqueProducts()
   items: ItemDto[];
+
+  @IsString()
+  @IsNotEmpty()
+  customerName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address: string;
 }
