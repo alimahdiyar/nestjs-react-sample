@@ -1,14 +1,3 @@
-<p align="center">
-  <a href="https://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-<h1 align="center">
-  Nest-React-Boilerplate-With-Auth
-</h1>
-
-## Getting Started
-
-This repository is a boilerplate with auth for NestJS + React full stack applications using turbo, prisma and docker.
-
 ### Installation
 
 _Installation process for the repository_
@@ -16,7 +5,7 @@ _Installation process for the repository_
 1. Clone the repo
 
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/alimahdiyar/nestjs-react-sample.git
 
    ```
 
