@@ -17,21 +17,22 @@ export default () => {
   return (
     <BrowserRouter>
       <Routes>
-        {auth === true && (
+        {auth === true ? (
           <>
             <Route path="/" element={<HomePage />} />
-            <Route path="/orders" element={<Orders />} />
             <Route path="/orders/:id" element={<Order />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/login" element={<Navigate to={"/"} />} />
             <Route path="/register" element={<Navigate to={"/"} />} />
           </>
-        )}
-        {auth === false && (
+        ) : auth === false ? (
           <>
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Navigate to={"/login"} />} />
           </>
+        ) : (
+          <Route path="*" element={<div>loading...</div>} />
         )}
       </Routes>
     </BrowserRouter>
