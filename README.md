@@ -30,19 +30,25 @@ _Installation process for the repository_
    ```
 6. The repo is now ready to use
 
-### e2e tests
+### tests
 
-#### Frontend
+#### Frontend (e2e)
 
 ```sh
 npm run dev:host --workspace=client
 npm run cypress:open --workspace=client # while the server is running by the previous command
 ```
 
-#### Backend
+#### Backend (e2e)
 
 ```sh
-npm run test:e2e --workspace=api
+npm run test:e2e --workspace=api # database should be running
+```
+
+#### Backend (unit)
+
+```sh
+npm run test --workspace=api
 ```
 
 ### Usage
