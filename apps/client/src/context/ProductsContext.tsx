@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { Product } from "types/product.type";
-import { apiUrl } from "../../constants";
+import { apiUrl } from "constants/index";
 
 // Define the context type
 interface ProductsContextType {

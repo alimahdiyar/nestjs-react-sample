@@ -1,10 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./views/HomePage/Homepage";
-import LoginPage from "./views/Auth/LoginPage/LoginPage";
-import RegisterPage from "./views/Auth/RegisterPage/RegisterPage";
-import validateToken from "../core/utils/validateToken";
-import Orders from "./views/Orders/Orders";
-import Order from "./views/Orders/Order";
+import HomePage from "views/HomePage/Homepage";
+import LoginPage from "views/Auth/LoginPage/LoginPage";
+import RegisterPage from "views/Auth/RegisterPage/RegisterPage";
+import validateToken from "core/utils/validateToken";
+import Orders from "views/Orders/Orders";
+import Order from "views/Orders/Order";
 import { useEffect, useState } from "react";
 
 export default () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { User } from "../../types/user.type";
-import { apiUrl } from "../../constants";
+import { User } from "types/user.type";
+import { apiUrl } from "constants/index";
 
 export default (url: string, type: string) => {
   const [data, setData] = useState<User[]>([]);

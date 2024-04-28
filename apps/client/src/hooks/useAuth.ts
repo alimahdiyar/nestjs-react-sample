@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { apiUrl } from "../../constants";
+import { apiUrl } from "constants/index";
 
 export default () => {
   const [error, setError] = useState<string | null>(null);

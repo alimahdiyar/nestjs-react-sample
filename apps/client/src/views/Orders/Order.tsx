@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { apiUrl } from "../../../constants";
-import { Order as OrderType, OrderItem } from "../../../types/order.type";
+import { apiUrl } from "constants/index";
+import { Order as OrderType, OrderItem } from "types/order.type";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useProductsContext } from "../../context/ProductsContext";
-import Button from "../../components/atoms/Button/Button";
+import { useProductsContext } from "context/ProductsContext";
+import Button from "components/atoms/Button/Button";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import OrderDocument from "./OrderDocument";
-import { Product } from "../../../types/product.type";
-import { ProductCard } from "../../components/molecules/ProductCard/ProductCard";
+import { Product } from "types/product.type";
+import { ProductCard } from "components/molecules/ProductCard/ProductCard";
 
 function OrderPDF({
   order,

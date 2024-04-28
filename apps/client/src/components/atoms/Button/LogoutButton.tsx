@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from "./Button";
-import { apiUrl } from "../../../../constants";
+import { apiUrl } from "constants/index";
 
 const LogoutButton = (props: Partial<ButtonProps>) => {
   async function doLogout() {

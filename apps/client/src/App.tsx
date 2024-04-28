@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "./router";
-import { ProductsProvider } from "./context/ProductsContext";
+import { ProductsProvider } from "context/ProductsContext";
 
 function App() {
   return (

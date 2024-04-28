@@ -1,10 +1,10 @@
-import { useProductsContext } from "../../context/ProductsContext";
+import { useProductsContext } from "context/ProductsContext";
 import { useState } from "react";
-import Button from "../../components/atoms/Button/Button";
-import LogoutButton from "../../components/atoms/Button/LogoutButton";
-import { apiUrl } from "../../../constants";
+import Button from "components/atoms/Button/Button";
+import LogoutButton from "components/atoms/Button/LogoutButton";
+import { apiUrl } from "constants/index";
 import { Link, useNavigate } from "react-router-dom";
-import { ProductCard } from "../../components/molecules/ProductCard/ProductCard";
+import { ProductCard } from "components/molecules/ProductCard/ProductCard";
 
 type OrderItem = {
   productId: number;

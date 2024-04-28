@@ -1,4 +1,4 @@
-import { apiUrl } from "../../constants";
+import { apiUrl } from "constants/index";
 
 export default async (): Promise<boolean> => {
   return fetch(`${apiUrl}/auth/validate/`, {

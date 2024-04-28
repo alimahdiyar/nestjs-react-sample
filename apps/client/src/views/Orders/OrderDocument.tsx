@@ -1,7 +1,7 @@
 import React from "react";
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import { Order } from "../../../types/order.type";
-import { Product } from "../../../types/product.type";
+import { Order } from "types/order.type";
+import { Product } from "types/product.type";
 
 const OrderDocument = ({
   order,

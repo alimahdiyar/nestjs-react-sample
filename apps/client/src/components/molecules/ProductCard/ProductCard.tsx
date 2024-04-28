@@ -1,5 +1,5 @@
-import { Product } from "../../../../types/product.type";
-import Button from "../../atoms/Button/Button";
+import { Product } from "types/product.type";
+import Button from "components/atoms/Button/Button";
 
 export function ProductCard({
   product,

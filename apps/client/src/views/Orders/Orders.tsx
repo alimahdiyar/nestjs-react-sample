@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { apiUrl } from "../../../constants";
-import { Order } from "../../../types/order.type";
-import Button from "../../components/atoms/Button/Button";
+import { apiUrl } from "constants/index";
+import { Order } from "types/order.type";
+import Button from "components/atoms/Button/Button";
 import { Link } from "react-router-dom";
 import { useProductsContext } from "../../context/ProductsContext";
 
