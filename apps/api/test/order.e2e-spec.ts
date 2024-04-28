@@ -6,11 +6,12 @@ import { INestApplication } from '@nestjs/common';
 import { setupApp } from '../src/main';
 import { AuthGuard } from '../src/core/guards/auth.guard';
 import { MockAuthGuard } from '../src/common/mock-auth.guard';
+import { UserService } from '../src/core/user/user.service';
+import { ProductService } from '../src/modules/product/product.service';
 
 describe('OrderController (e2e)', () => {
   let app: INestApplication;
   let prismaService: PrismaService;
-  let token: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -25,12 +26,20 @@ describe('OrderController (e2e)', () => {
     await app.init();
     prismaService = app.get(PrismaService);
 
-    await prismaService.product.createMany({
-      data: [
-        { name: 'Product 1', pricePerUnit: 10.0 },
-        { name: 'Product 2', pricePerUnit: 15.5 },
-      ],
-    });
+    const userService = app.get(UserService);
+    const userExists = await userService.findOne('a@b.com');
+    if (!userExists) {
+      await userService.createUserAsync('a@b.com', 'a', 'abcd@1234');
+    }
+
+    const productService = app.get(ProductService);
+    const productExists =
+      (await productService.getAllProducts()).data.length > 0;
+    if (!productExists) {
+      await prismaService.product.create({
+        data: { name: 'Product 1', pricePerUnit: 15.5 },
+      });
+    }
   });
 
   it('POST /orders - Create order', async () => {
@@ -39,11 +48,6 @@ describe('OrderController (e2e)', () => {
       customerName: 'a',
       address: 'aaaaaa',
     };
-    // jest.mock('../src/modules/prisma/prisma.service', () => ({
-    //   PrismaService: jest.fn().mockImplementation(() => ({
-    //     canActivate: jest.fn(() => true),
-    //   })),
-    // }));
     return request(app.getHttpServer())
       .post('/api/v1/orders')
       .send(orderData)
