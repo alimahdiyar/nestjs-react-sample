@@ -6,7 +6,7 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from 'modules/prisma/prisma.service';
 
 @ValidatorConstraint({ name: 'ProductExists', async: true })
 @Injectable() // This allows the class to be injected with other services like PrismaService

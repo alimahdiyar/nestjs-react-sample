@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../../app.module';
+import { AppModule } from 'app.module';
 import { PrismaService } from '../prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
-import { setupApp } from '../../main';
-import { AuthGuard } from '../../core/guards/auth.guard';
-import { MockAuthGuard } from '../../common/mock-auth.guard';
+import { setupApp } from 'main';
+import { AuthGuard } from 'core/guards/auth.guard';
+import { MockAuthGuard } from 'common/mock-auth.guard';
 
 describe('OrderController', () => {
   let app: INestApplication;

@@ -6,8 +6,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ProductExists } from '../../product/product-exists.validator';
-import { HasUniqueProducts } from '../../product/has-unique-products.validator';
+import { ProductExists } from 'modules/product/product-exists.validator';
+import { HasUniqueProducts } from 'modules/product/has-unique-products.validator';
 
 class ItemDto {
   @IsNumber()

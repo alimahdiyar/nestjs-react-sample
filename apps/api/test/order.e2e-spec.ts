@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../src/app.module';
-import { PrismaService } from '../src/modules/prisma/prisma.service';
+import { AppModule } from 'app.module';
+import { PrismaService } from 'modules/prisma/prisma.service';
 import { INestApplication } from '@nestjs/common';
-import { setupApp } from '../src/main';
-import { AuthGuard } from '../src/core/guards/auth.guard';
-import { MockAuthGuard } from '../src/common/mock-auth.guard';
-import { UserService } from '../src/core/user/user.service';
-import { ProductService } from '../src/modules/product/product.service';
+import { setupApp } from 'main';
+import { AuthGuard } from 'core/guards/auth.guard';
+import { MockAuthGuard } from 'common/mock-auth.guard';
+import { UserService } from 'core/user/user.service';
+import { ProductService } from 'modules/product/product.service';
 
 describe('OrderController (e2e)', () => {
   let app: INestApplication;
